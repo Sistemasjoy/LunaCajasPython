@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from django.shortcuts import render
+import json
 from utilidades.impresora import (
     testF, 
     configurarPueto, 
@@ -78,20 +79,61 @@ def status(req):
                 "error":True
             })
 
-    
 @api_view(['GET'])
-def enviarComandoCMD(req):
-    comando= req.query_params.get('comando')
+def enviarComandoCMD2(request):
+    comando= request.query_params.get('comando')
     print(comando)
-    
     PORT = cache.get('PORT')
     DB_PORT = Puerto.objects.last()
-    print(PORT)
     if PORT == DB_PORT.nombre and isinstance(PORT,str):
         resp=enviarComando(PORT, comando)
-        return HttpResponse("Reporte Impreso")
+        
+        return JsonResponse({
+                    "resp":resp,
+                    "status":True,
+                    "error":False
+                    })
     else:
-        return HttpResponse("error al imprimir") 
+         return JsonResponse({
+                    "resp":"OJO",
+                    "status":False,
+                    "error":True
+                    }) 
+    
+@api_view(['POST'])
+def enviarComandoCMD(request):
+    params= request.data.get("params")
+    comando= params['com']
+    tipo= params['tipo']
+    PORT = cache.get('PORT')
+    DB_PORT = Puerto.objects.last()
+    if PORT == DB_PORT.nombre and isinstance(PORT,str):
+        if tipo == 'factura':
+            imprimirFactura(comando, PORT)
+        # resp=enviarComando(PORT, comando)
+        return JsonResponse({
+                    "resp":"pendiente",
+                    "status":True,
+                    "error":False
+                    })
+    else:
+         return JsonResponse({
+                    "resp":"OJO",
+                    "status":False,
+                    "error":True
+                    }) 
+
+
+
+def imprimirFactura(com, PORT):
+    data = json.loads(com)
+    print(data)
+    print(type(data))
+    for line in data:
+        print(str(line))
+        resp=enviarComando(PORT, line)
+    return None 
+    
 
 def imprimirReporteX(req):
     PORT = cache.get('PORT')
@@ -254,6 +296,7 @@ def getDatosImpresora4(req):
     try:
         if PORT == DB_PORT.nombre and isinstance(PORT,str):
             datos=datosImpresora4(PORT)
+            print(type(datos))
             return JsonResponse({
                     "mensaje":"Datos de la impresora 4", 
                     "datos":datos.__dict__,

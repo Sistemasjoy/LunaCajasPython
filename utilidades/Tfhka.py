@@ -93,8 +93,8 @@ class tf_ve_ifpython:
           print(msj.encode('utf-8'))     
           self._write(msj.encode('utf-8'))
           # self._write(b'\x020x05h\x03&')
-          rt=self._read(5)
-          print('casa', type(rt))
+          rt=self._read(1)
+          print('casa', rt)
           if rt==chr(0x06):
             self.envio = "Status: 00  Error: 00"
             rt=True
@@ -108,7 +108,6 @@ class tf_ve_ifpython:
         self.ser.setRTS(False)
       except serial.SerialException:
         rt=False
-        print('ojo')
       return rt
 
   def SendCmdFile(self, f):
