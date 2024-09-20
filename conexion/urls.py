@@ -15,6 +15,7 @@ urlpatterns= [
     url(r'^getReporteX4/', views.getReporteX4, name='getReporteX4'),
     url(r'^getReporteX5/', views.getReporteX5, name='getReporteX5'),
     url(r'^getReporteX7/', views.getReporteX7, name='getReporteX7'),
+    url(r'^getZReport/', views.getZReport, name='getZReport'),
     url(r'^getDatosImpresora1/', views.getDatosImpresora1, name='getDatosImpresora1'),
     url(r'^getDatosImpresora2/', views.getDatosImpresora2, name='getDatosImpresora2'),
     url(r'^getDatosImpresora3/', views.getDatosImpresora3, name='getDatosImpresora3'),

@@ -44,7 +44,8 @@ def statusImpresora(PORT):
 def enviarComando(PORT, comando):
     impresora = cargarImpresora(PORT)
     resp=impresora.SendCmd(comando)
-    print(resp)
+    if not resp:
+        enviarComando(PORT, comando)
     impresora.CloseFpctrl()
     return resp
 
@@ -88,6 +89,12 @@ def datosReporteX5(PORT):
 def datosReporteX7(PORT):
     impresora = cargarImpresora(PORT)
     datos = impresora.GetX7Report()
+    impresora.CloseFpctrl()
+    return datos
+
+def datosReporteZ(PORT):
+    impresora = cargarImpresora(PORT)
+    datos = impresora.GetZReport()
     impresora.CloseFpctrl()
     return datos
 

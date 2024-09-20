@@ -16,6 +16,7 @@ from utilidades.impresora import (
     datosReporteX4, 
     datosReporteX5, 
     datosReporteX7, 
+    datosReporteZ,
     datosImpresora1,
     datosImpresora2,
     datosImpresora3,
@@ -157,12 +158,21 @@ def imprimirReporteX(req):
 def imprimirReporteZ(req):
     PORT = cache.get('PORT')
     DB_PORT = Puerto.objects.last()
-    print(PORT)
-    if PORT == DB_PORT.nombre and isinstance(PORT,str):
-        ReporteZPrint(PORT)
-        return HttpResponse("Reporte Impreso Z")
-    else:
-        return HttpResponse("error al imprimir")
+    try:
+        if PORT == DB_PORT.nombre and isinstance(PORT,str):
+            ReporteZPrint(PORT)
+            return JsonResponse({
+                        "resp":'reporte Impreso',
+                        "error":False
+                        })
+        else:
+           raise Exception('el puerto no esta configurado')
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+                "message":"Error al configurar el puerto",
+                "error":True
+            })
     
 def getReporteX1(req):
     PORT = cache.get('PORT')
@@ -242,6 +252,22 @@ def getReporteX7(req):
     except Exception as e:
         print(e)
         return HttpResponse("Error de consulta") 
+    
+def getZReport(req):
+    PORT = cache.get('PORT')
+    DB_PORT = Puerto.objects.last()
+    
+    print(PORT)
+    try:
+        if PORT == DB_PORT.nombre and isinstance(PORT,str):
+            datos=datosReporteZ(PORT)
+            return JsonResponse({"mensaje":"Datos del reporte z", "datos":datos.__dict__}) 
+        else:
+            raise Exception("los tipos con coinciden")
+
+    except Exception as e:
+        print(e)
+        return HttpResponse("Error de consulta") 
         
 def getDatosImpresora1(req):
     PORT = cache.get('PORT')
@@ -296,7 +322,6 @@ def getDatosImpresora4(req):
     try:
         if PORT == DB_PORT.nombre and isinstance(PORT,str):
             datos=datosImpresora4(PORT)
-            print(type(datos))
             return JsonResponse({
                     "mensaje":"Datos de la impresora 4", 
                     "datos":datos.__dict__,
