@@ -8,6 +8,7 @@ urlpatterns= [
     url(r'^status/', views.status, name='status'),
     url(r'^enviarComandoCMD/', views.enviarComandoCMD, name='enviarComandoCMD'),
     url(r'^enviarComandoCMD2/', views.enviarComandoCMD2, name='enviarComandoCMD2'),
+    url(r'^enviarComandoCMD3/', views.enviarComandoCMD3, name='enviarComandoCMD'),
     url(r'^imprimirReporteX/', views.imprimirReporteX, name='imprimirReporteX'),
     url(r'^imprimirReporteZ/', views.imprimirReporteZ, name='imprimirReporteZ'),
     url(r'^getReporteX1/', views.getReporteX1, name='getReporteX1'),

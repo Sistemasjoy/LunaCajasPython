@@ -80,6 +80,29 @@ def status(req):
                 "error":True
             })
 
+
+
+@api_view(['POST'])
+def enviarComandoCMD3(request):
+    comando= request.data.get('comando')
+    print(comando)
+    PORT = cache.get('PORT')
+    DB_PORT = Puerto.objects.last()
+    if PORT == DB_PORT.nombre and isinstance(PORT,str):
+        resp=enviarComando(PORT, comando)
+        
+        return JsonResponse({
+                    "resp":resp,
+                    "status":True,
+                    "error":False
+                    })
+    else:
+         return JsonResponse({
+                    "resp":"OJO",
+                    "status":False,
+                    "error":True
+                    }) 
+
 @api_view(['GET'])
 def enviarComandoCMD2(request):
     comando= request.query_params.get('comando')
