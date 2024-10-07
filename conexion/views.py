@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from django.shortcuts import render
 import json
+import time
 from utilidades.impresora import (
     testF, 
     configurarPueto, 
@@ -135,6 +136,9 @@ def enviarComandoCMD(request):
         if tipo == 'factura':
             imprimirFactura(comando, PORT)
         # resp=enviarComando(PORT, comando)
+        print('esperado....')
+        time.sleep(6)
+        print('listo')
         return JsonResponse({
                     "resp":"pendiente",
                     "status":True,
