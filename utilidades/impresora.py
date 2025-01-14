@@ -26,12 +26,15 @@ def configurarPueto():
   
         try:
             impresora.OpenFpctrl(portName)
+            print('Pureba del '+ portName)
             status = impresora.ReadFpStatus()
-            print(status)
             impresora.CloseFpctrl()
+            print(status)
+            if 'CTS en falso' in status:
+                raise Exception('No conecto Ojo: '+ portName)
             return portName
         except Exception as e:
-            print('No conecto Ojo: '+ portName) 
+            print('No conecto Ojo: ' + portName) 
         puerto = puerto+ 1
     return None
 

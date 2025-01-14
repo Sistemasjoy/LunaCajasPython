@@ -36,6 +36,7 @@ command_lock = threading.Lock()
 
 def disponible():
     if command_lock.locked():
+        print("Printer busy")
         return JsonResponse({"error": "Printer busy"}, status=503)
 
 
@@ -50,10 +51,17 @@ def configurarPuerto(request):
     try:
         DB_PORT = Puerto.objects.last()
         print("Ultimo puerto:" + DB_PORT.nombre)
-        PORT = cache.get_or_set("PORT", "")
-        PORT = configurarPueto()
-        cache.set("PORT", PORT)
-        Puerto.objects.create(nombre=PORT)
+        OLD_PORT =DB_PORT.nombre
+        resp = statusImpresora(OLD_PORT)
+        if 'Sin error' in resp:
+            print(resp, "el puerto sigue activo")
+            PORT = OLD_PORT
+        else:
+            # PORT = cache.get_or_set("PORT", "")
+            PORT = configurarPueto()
+            Puerto.objects.create(nombre=str(PORT))
+        
+        cache.set("PORT", str(PORT))
 
         return JsonResponse(
             {"message": "puerto configurado: " + PORT, "status": True, "port": PORT}
@@ -68,8 +76,8 @@ def status(req):
     try:
         PORT = cache.get("PORT")
         DB_PORT = Puerto.objects.last()
-        print(PORT)
         if PORT == DB_PORT.nombre and isinstance(PORT, str):
+            print("verificando status")
             resp = statusImpresora(PORT)
             return JsonResponse({"resp": resp, "status": True, "error": False})
         else:
