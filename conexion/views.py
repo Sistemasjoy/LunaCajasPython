@@ -7,6 +7,7 @@ import json
 import time
 from utilidades.impresora import (
     testF,
+    probarPuerto,
     configurarPueto,
     statusImpresora,
     enviarComando,
@@ -52,8 +53,8 @@ def configurarPuerto(request):
         DB_PORT = Puerto.objects.last()
         print("Ultimo puerto:" + DB_PORT.nombre)
         OLD_PORT =DB_PORT.nombre
-        resp = statusImpresora(OLD_PORT)
-        if 'Sin error' in resp:
+        resp = probarPuerto(OLD_PORT)
+        if resp:
             print(resp, "el puerto sigue activo")
             PORT = OLD_PORT
         else:

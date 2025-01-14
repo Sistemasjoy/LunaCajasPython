@@ -50,8 +50,7 @@ class tf_ve_ifpython:
         #print "baudrate", self.Port.baudRate
         self.bandera=True
         return True
-      # except (serial.portNotOpenError, serial.SerialTimeoutException):
-      except ( serial.SerialTimeoutException):
+      except (serial.portNotOpenError, serial.SerialTimeoutException):
         self.bandera=False
         self.envio = "Impresora no conectada o error accediendo al puerto" + str(p)
         return False

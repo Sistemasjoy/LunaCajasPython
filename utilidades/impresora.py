@@ -17,7 +17,23 @@ def cargarImpresora(PORT):
     impresora = Tfhka.Tfhka()
     impresora.OpenFpctrl(PORT)
     return impresora
-
+def probarPuerto(PORT):
+    impresora = Tfhka.Tfhka()
+    
+    try:
+            impresora.OpenFpctrl(PORT)
+            print('Pureba del '+ PORT)
+            status = impresora.ReadFpStatus()
+            impresora.CloseFpctrl()
+            print(status)
+            if 'CTS en falso' in status:
+                raise Exception('No conecto Ojo: '+ PORT)
+            return PORT
+    except Exception as e:
+        print('No conecto Ojo: ' + PORT)
+        return None
+    
+    
 def configurarPueto():
     impresora = Tfhka.Tfhka()
     puerto=0
