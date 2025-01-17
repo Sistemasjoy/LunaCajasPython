@@ -38,7 +38,7 @@ command_lock = threading.Lock()
 def disponible():
     if command_lock.locked():
         print("Printer busy")
-        return JsonResponse({"error": "Printer busy"}, status=503)
+        return JsonResponse({"error": True ,"message": "Printer busy"}, status=503)
 
 
 def index(request):

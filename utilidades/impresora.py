@@ -63,8 +63,9 @@ def statusImpresora(PORT):
 def enviarComando(PORT, comando):
     impresora = cargarImpresora(PORT)
     resp=impresora.SendCmd(comando)
-    if not resp:
-        enviarComando(PORT, comando)
+    print('respuesta del comando a la impresora',resp)
+    # if not resp:
+    #     enviarComando(PORT, comando)
     impresora.CloseFpctrl()
     return resp
 
