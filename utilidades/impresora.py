@@ -1,4 +1,5 @@
 import Tfhka
+import random
 def testF():
     impresora = Tfhka.Tfhka()
     print(impresora)
@@ -59,15 +60,20 @@ def statusImpresora(PORT):
     resp=impresora.ReadFpStatus()
     impresora.CloseFpctrl()
     return resp
-
 def enviarComando(PORT, comando):
     impresora = cargarImpresora(PORT)
-    resp=impresora.SendCmd(comando)
-    print('respuesta del comando a la impresora',resp)
-    # if not resp:
-    #     enviarComando(PORT, comando)
-    impresora.CloseFpctrl()
-    return resp
+    resp = impresora.SendCmd(comando)
+    # resp = random.choice([True, False])
+    print(resp, comando)
+    # print('Respuesta del comando a la impresora', resp)
+    if resp is False:
+        impresora.CloseFpctrl()
+        
+        enviarComando(PORT, comando)
+        return resp
+    else :
+        impresora.CloseFpctrl()
+        return resp
 
 
 def ReporteXPrint(PORT):

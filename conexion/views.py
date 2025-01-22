@@ -100,7 +100,7 @@ def enviarComandoCMD(request):
         if PORT == DB_PORT.nombre and isinstance(PORT, str):
             with command_lock:
                 if tipo == "factura":
-                    imprimirFactura(comando, PORT)
+                    impr = imprimirFactura(comando, PORT)
                 # resp=enviarComando(PORT, comando)
                 print("esperado....")
                 time.sleep(6)
@@ -131,7 +131,6 @@ def enviarComandoCMDGET(request):
     DB_PORT = Puerto.objects.last()
     if PORT == DB_PORT.nombre and isinstance(PORT, str):
         resp = enviarComando(PORT, comando)
-
         return JsonResponse({"resp": resp, "status": True, "error": False})
     else:
         return JsonResponse(
@@ -158,12 +157,10 @@ def enviarComandoCMDPOST(request):
 
 def imprimirFactura(com, PORT):
     data = json.loads(com)
-    print(data)
-    print(type(data))
+    print(len(data), "imprimir llll")
     for line in data:
-        print(str(line))
         resp = enviarComando(PORT, line)
-    return None
+    return resp
 
 
 def imprimirReporteX(req):
