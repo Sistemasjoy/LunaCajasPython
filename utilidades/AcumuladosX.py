@@ -1,14 +1,14 @@
-from Util import Util
+from .Util import Util
 
 class AcumuladosX(object):
   #Global variables
-  _freeTax = 0L
-  _generalRate1 = 0L
-  _generalRate1Tax = 0L
-  _reducedRate2 = 0L
-  _reducedRate2Tax = 0L
-  _additionalRate3 = 0L
-  _additionalRate3Tax = 0L
+  _freeTax = 0
+  _generalRate1 = 0
+  _generalRate1Tax = 0
+  _reducedRate2 = 0
+  _reducedRate2Tax = 0
+  _additionalRate3 = 0
+  _additionalRate3Tax = 0
 
   def __init__(self, trama):
     if (trama != None):

@@ -1,21 +1,22 @@
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 
-from ReportData import ReportData
-from S1PrinterData import S1PrinterData
-from S2PrinterData import S2PrinterData
-from S3PrinterData import S3PrinterData
-from S4PrinterData import S4PrinterData
-from S5PrinterData import S5PrinterData
-from S6PrinterData import S6PrinterData
-from S7PrinterData import S7PrinterData
-from S8EPrinterData import S8EPrinterData
-from S8PPrinterData import S8PPrinterData
-from AcumuladosX import AcumuladosX
+from .ReportData import ReportData
+from .S1PrinterData import S1PrinterData
+from .S2PrinterData import S2PrinterData
+from .S3PrinterData import S3PrinterData
+from .S4PrinterData import S4PrinterData
+from .S5PrinterData import S5PrinterData
+from .S6PrinterData import S6PrinterData
+from .S7PrinterData import S7PrinterData
+from .S8EPrinterData import S8EPrinterData
+from .S8PPrinterData import S8PPrinterData
+from .AcumuladosX import AcumuladosX
 
 import serial
 import operator
 import time
 import datetime
+from functools import reduce
 
 import sys
 import glob
@@ -47,7 +48,7 @@ class tf_ve_ifpython:
     if not self.bandera:
       try:
         self.ser=serial.Serial(port=p, baudrate=self.Port.baudRate, bytesize=self.Port.dataBits, parity=self.Port.parity, stopbits=self.Port.stopBits, timeout=self.Port.readTimeOut, writeTimeout=self.Port.writeTimeOut, xonxoff=0, rtscts=0)##Find out what are xonxoff, and rtscts for
-        #print "baudrate", self.Port.baudRate
+        #print("baudrate", self.Port.baudRate)
         self.bandera=True
         return True
       except (serial.portNotOpenError, serial.SerialTimeoutException):
@@ -113,7 +114,7 @@ class tf_ve_ifpython:
   def SendCmdFile(self, f):
     for linea in f:
        if (linea!=""):
-          #print linea
+          #print(linea)
           self.SendCmd(linea)
 
   def _QueryCmd(self,cmd):
@@ -188,13 +189,13 @@ class tf_ve_ifpython:
 
   def _write(self,msj):
     if self.mdepura:
-      print '<<< '+self._Debug(msj)
+      print('<<< '+self._Debug(msj))
     self.ser.write(msj)
 
   def _read(self,bytes):
     msj = self.ser.read(bytes)
     if self.mdepura:
-      print '>>> '+self._Debug(msj)
+      print('>>> '+self._Debug(msj))
     return msj
 
   def _AssembleQueryToSend(self,linea):
@@ -237,12 +238,12 @@ class tf_ve_ifpython:
       return trama
 
   def _States_Report(self, cmd, r):
-    #print cmd
+    #print(cmd)
     ret = r
     self._QueryCmd(cmd)
     while True:
       trama=self._FetchRow_Report(ret)
-      #print "La trama es", trama, "hasta aca"
+      #print("La trama es", trama, "hasta aca")
       if trama==None:
         break
       return trama
@@ -442,86 +443,86 @@ class tf_ve_ifpython:
 class Tfhka(tf_ve_ifpython):
   def GetS1PrinterData(self):
     self.trama=self._States("S1")
-    #print self.trama
+    #print(self.trama)
     self.S1PrinterData = S1PrinterData(self.trama)
-    #print self.S1PrinterData
+    #print(self.S1PrinterData)
     return self.S1PrinterData
 
   def GetS2PrinterData(self):
     self.trama=self._States("S2")
-    #print self.trama
+    #print(self.trama)
     self.S2PrinterData= S2PrinterData(self.trama)
     return self.S2PrinterData
 
   def GetS3PrinterData(self):
     self.trama=self._States("S3")
-    #print self.trama
+    #print(self.trama)
     self.S3PrinterData= S3PrinterData(self.trama)
     return self.S3PrinterData
   
   def GetS4PrinterData(self):
     self.trama=self._States("S4")
-    #print self.trama
+    #print(self.trama)
     self.S4PrinterData= S4PrinterData(self.trama)
     return self.S4PrinterData
   
   def GetS5PrinterData(self):
     self.trama=self._States("S5")
-    #print self.trama
+    #print(self.trama)
     self.S5PrinterData= S5PrinterData(self.trama)
     return self.S5PrinterData
   
   def GetS6PrinterData(self):
     self.trama=self._States("S6")
-    #print self.trama
+    #print(self.trama)
     self.S6PrinterData= S6PrinterData(self.trama)
     return self.S6PrinterData
   
   def GetS7PrinterData(self):
     self.trama=self._States("S7")
-    #print self.trama
+    #print(self.trama)
     self.S7PrinterData= S7PrinterData(self.trama)
     return self.S7PrinterData
 
   def GetS8EPrinterData(self):
     self.trama=self._States("S8E")
-    #print self.trama
+    #print(self.trama)
     self.S8EPrinterData= S8EPrinterData(self.trama)
     return self.S8EPrinterData
   
   def GetS8PPrinterData(self):
     self.trama=self._States("S8P")
-    #print self.trama
+    #print(self.trama)
     self.S8PPrinterData= S8PPrinterData(self.trama)
     return self.S8PPrinterData
   
   def GetXReport(self):
     self.trama=self._UploadDataReport("U0X")
-    #print self.trama
+    #print(self.trama)
     self.XReport=ReportData(self.trama)
     return self.XReport
 
   def GetX2Report(self):
     self.trama=self._UploadDataReport("U1X")
-    #print self.trama
+    #print(self.trama)
     self.XReport=ReportData(self.trama)
     return self.XReport
 
   def GetX4Report(self):
     self.trama=self._UploadDataReport("U0X4")
-    #print self.trama
+    #print(self.trama)
     self.XReport=AcumuladosX(self.trama)
     return self.XReport
 
   def GetX5Report(self):
     self.trama=self._UploadDataReport("U0X5")
-    #print self.trama
+    #print(self.trama)
     self.XReport=AcumuladosX(self.trama)
     return self.XReport
 
   def GetX7Report(self):
     self.trama=self._UploadDataReport("U0X7")
-    #print self.trama
+    #print(self.trama)
     self.XReport=AcumuladosX(self.trama)
     return self.XReport
 

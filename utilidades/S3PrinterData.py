@@ -1,12 +1,12 @@
-from Util import Util
+from .Util import Util
 
 class S3PrinterData(object):
   _typeTax1=0
-  _tax1=0L
+  _tax1=0
   _typeTax2=0
-  _tax2=0L
+  _tax2=0
   _typeTax3=0
-  _tax3=0L
+  _tax3=0
   _systemFlags=[]
   
   def __init__(self, trama):

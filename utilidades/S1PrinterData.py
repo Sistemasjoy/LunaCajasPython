@@ -1,9 +1,9 @@
 import datetime
-from Util import Util
+from .Util import Util
 
 class S1PrinterData(object):
   _cashierNumber = 0
-  _totalDailySales = 0L
+  _totalDailySales = 0
   _lastInvoiceNumber = 0
   _quantityOfInvoicesToday = 0
   _lastDebtNoteNumber = 0

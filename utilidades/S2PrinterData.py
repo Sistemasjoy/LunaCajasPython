@@ -1,10 +1,10 @@
 import datetime
-from Util import Util
+from .Util import Util
 class S2PrinterData(object):
-  _subTotalBases = 0L
-  _subTotalTax = 0L
+  _subTotalBases = 0
+  _subTotalTax = 0
   _dataDummy = ""
-  _amountPayable = 0L
+  _amountPayable = 0
   _numberPaymentsMade = 0
   _typeDocument = 0
   _quantityArticles = 0

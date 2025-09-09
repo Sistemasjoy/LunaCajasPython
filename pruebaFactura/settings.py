@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -80,12 +81,16 @@ WSGI_APPLICATION = 'pruebaFactura.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-CORS_ALLOWED_ORIGINS = True
-CORS_ORIGIN_WHITELIST=['http://localhost:3000', 'http://172.168.20.98:3000','http://172.168.20.10:3000']
-CORS_ALLOW_CREDENTIALS=True
+# CORS settings for Django 4.2+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://172.168.20.98:3000',
+    'http://172.168.20.10:3000'
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -124,3 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Default primary key field type for Django 4.2+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

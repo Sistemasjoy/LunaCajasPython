@@ -1,4 +1,4 @@
-from Util import Util
+from .Util import Util
 
 class S4PrinterData(object):
   
@@ -11,7 +11,7 @@ class S4PrinterData(object):
           if (len(_arrayParameter) > 1):
             _numberOfMeansOfPayment = len(_arrayParameter) - 1
             _iteration = 0
-            _valor = 0L
+            _valor = 0
             while (_iteration < _numberOfMeansOfPayment):
               _cadena = _arrayParameter[_iteration]
               if (_iteration == 0):

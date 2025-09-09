@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 import threading
@@ -29,7 +27,7 @@ from utilidades.impresora import (
     datosImpresora8P,
 )
 from django.core.cache import cache
-from models import Puerto
+from .models import Puerto
 
 command_lock = threading.Lock()
 

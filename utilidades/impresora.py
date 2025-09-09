@@ -1,4 +1,4 @@
-import Tfhka
+from . import Tfhka
 def testF():
     impresora = Tfhka.Tfhka()
     print(impresora)

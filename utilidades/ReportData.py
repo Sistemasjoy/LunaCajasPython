@@ -1,5 +1,5 @@
 import datetime
-from Util import Util
+from .Util import Util
 class ReportData(object):
 
   _numberOfLastZReport = 0
@@ -12,29 +12,29 @@ class ReportData(object):
   _numberOfLastCreditNote = 0
   _numberOfLastNonFiscal = 0
 
-  _freeSalesTax = 0L # ventas
-  _generalRate1Sale = 0L
-  _generalRate1Tax = 0L
-  _reducedRate2Sale = 0L
-  _reducedRate2Tax = 0L
-  _additionalRate3Sal = 0L
-  _additionalRate3Tax = 0L
+  _freeSalesTax = 0 # ventas
+  _generalRate1Sale = 0
+  _generalRate1Tax = 0
+  _reducedRate2Sale = 0
+  _reducedRate2Tax = 0
+  _additionalRate3Sal = 0
+  _additionalRate3Tax = 0
 
-  _freeTaxDebit = 0L # Notas de Debito
-  _generalRateDebit = 0L
-  _generalRateTaxDebit = 0L
-  _reducedRateDebit = 0L
-  _reducedRateTaxDebit = 0L
-  _additionalRateDebit = 0L
-  _additionalRateTaxDebit = 0L
+  _freeTaxDebit = 0 # Notas de Debito
+  _generalRateDebit = 0
+  _generalRateTaxDebit = 0
+  _reducedRateDebit = 0
+  _reducedRateTaxDebit = 0
+  _additionalRateDebit = 0
+  _additionalRateTaxDebit = 0
   
-  _freeTaxDevolution = 0L # Notas de Credito
-  _generalRateDevolution = 0L
-  _generalRateTaxDevolution = 0L
-  _reducedRateDevolution = 0L
-  _reducedRateTaxDevolution = 0L
-  _additionalRateDevolution = 0L
-  _additionalRateTaxDevolution = 0L
+  _freeTaxDevolution = 0 # Notas de Credito
+  _generalRateDevolution = 0
+  _generalRateTaxDevolution = 0
+  _reducedRateDevolution = 0
+  _reducedRateTaxDevolution = 0
+  _additionalRateDevolution = 0
+  _additionalRateTaxDevolution = 0
 
   def __init__(self, trama):
     if (trama != None):
